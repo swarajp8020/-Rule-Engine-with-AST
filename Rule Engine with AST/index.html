@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rule Engine</title>
+  </head>
+  <body>
+    <h1>Rule Engine</h1>
+
+    <h2>Create Rule</h2>
+    <form id="create-rule-form">
+      <input type="text" id="rule-string" placeholder="Enter rule string" />
+      <button type="submit">Create Rule</button>
+    </form>
+
+    <h2>Evaluate Rule</h2>
+    <form id="evaluate-rule-form">
+      <input type="text" id="rule-id" placeholder="Enter rule ID" />
+      <textarea
+        id="user-data"
+        placeholder="Enter user data in JSON format"
+      ></textarea>
+      <button type="submit">Evaluate Rule</button>
+    </form>
+
+    <script>
+      document.getElementById("create-rule-form").onsubmit = function (e) {
+        e.preventDefault();
+        const ruleString = document.getElementById("rule-string").value;
+
+        fetch("/create_rule", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rule: ruleString }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Rule created successfully: " + JSON.stringify(data));
+          });
+      };
+
+      document.getElementById("evaluate-rule-form").onsubmit = function (e) {
+        e.preventDefault();
+        const ruleId = document.getElementById("rule-id").value;
+        const userData = JSON.parse(document.getElementById("user-data").value);
+
+        fetch("/evaluate_rule", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rule_id: ruleId, data: userData }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Evaluation Result: " + data.result);
+          });
+      };
+    </script>
+  </body>
+</html>
