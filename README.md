@@ -235,7 +235,7 @@ Example:
 
 ---
 
-## Bonus Features (Optional)
+## Bonus Features 
 
 - **Rule Modification**: Users can modify existing rules by updating the operators or operands.
 - **User-defined Functions**: Extend the rule engine to support user-defined functions for advanced conditions.
